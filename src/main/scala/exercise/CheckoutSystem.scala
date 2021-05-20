@@ -31,8 +31,20 @@ object CheckoutSystem {
   }
 
 
-  // no discounts .. yet
+  // "3 for the price of 2" on oranges
+  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  // Each triplet of oranges shall count as two oranges.
+  // If you look at the following mathematical series:
+  //
+  //  count:     1, 2, 3, 4, 5, 6, 7, 8, 9, ...
+  //  discount:  1, 2, 2, 3, 4, 4, 5, 6, 6, ...
+  //
+  // you can state that the discounted number of oranges
+  // can be computed as twice the number of triplets plus the rest
+  //
   def orangesIn(items: Seq[Item]) = {
-    items.filter(_ == "Orange")
+    val count = items.count(_ == "Orange")
+    val discount = 2 * (count / 3) + count % 3
+    Seq.tabulate(discount){ _ => "Orange" }
   }
 }
