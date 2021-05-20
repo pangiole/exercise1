@@ -12,7 +12,19 @@ class CheckoutSystemSpec extends AnyFlatSpec with Matchers{
   }
 
   it should "scan the given list of item and compute the total price" in {
-    CheckoutSystem.scan("Apple", "Apple", "Orange", "Apple") mustBe 2.05
+    CheckoutSystem.scan("Orange", "Orange", "Apple") mustBe 1.10
+  }
+
+  it should "apply 'buy-1-get-1-free' offer on apples" in {
+    CheckoutSystem.scan("Apple", "Apple", "Orange", "Apple") mustBe 1.45
+  }
+
+  it should "apply '3-for-the-price-of-2' offer on oranges" in {
+    CheckoutSystem.scan("Orange", "Apple", "Orange", "Orange", "Orange") mustBe 1.35
+  }
+
+  it should "apply offers on both pairs of apples and triplets of oranges" in {
+    CheckoutSystem.scan("Orange", "Apple", "Apple", "Orange", "Apple", "Orange", "Orange") mustBe 1.95
   }
 }
 
